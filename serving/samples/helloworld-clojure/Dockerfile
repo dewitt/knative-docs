@@ -1,8 +1,11 @@
-FROM clojure
-RUN mkdir -p /usr/src/app
+FROM clojure AS build
 WORKDIR /usr/src/app
 COPY project.clj /usr/src/app
 RUN lein deps
 COPY . /usr/src/app
-RUN mv "$(lein uberjar | sed -n 's/^Created \(.*standalone\.jar\)/\1/p')" app-standalone.jar
-CMD ["java", "-jar", "app-standalone.jar"]
+RUN lein uberjar
+
+FROM openjdk:8-jre-alpine
+WORKDIR /app
+COPY --from=build /usr/src/app/app.jar /app/app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]

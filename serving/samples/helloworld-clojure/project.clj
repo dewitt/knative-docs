@@ -8,4 +8,5 @@
                  [ring "1.7.0"]]
   :main ^:skip-aot helloworld-clojure.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all
+                       :uberjar-name "app.jar"}})
