@@ -12,6 +12,9 @@
 (compojure/defroutes app
   (compojure/GET "/" [] (hello))
   (route/not-found "Page not found"))
-  
+
+(defn port []
+  (Integer/parseInt (or (System/getenv "PORT") "8080")))
+
 (defn -main []
-  (jetty/run-jetty app {:join? false :port 8080}))
+  (jetty/run-jetty app {:join? false :port (port)}))
