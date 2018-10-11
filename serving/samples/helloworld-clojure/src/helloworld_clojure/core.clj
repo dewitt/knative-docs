@@ -1,6 +1,7 @@
 (ns helloworld-clojure.core
   (:gen-class)
   (:require [compojure.core :as compojure]
+            [compojure.route :as route]
             [ring.adapter.jetty :as jetty]
             [ring.util.response :as response]))
 
@@ -9,7 +10,8 @@
    (format "Hello, %s!" (or (System/getenv "TARGET") "World"))))
 
 (compojure/defroutes app
-  (compojure/GET "/" hello))
-
+  (compojure/GET "/" [] (hello))
+  (route/not-found "Page not found"))
+  
 (defn -main []
   (jetty/run-jetty app {:join? false :port 8080}))
