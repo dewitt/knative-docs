@@ -10,4 +10,3 @@
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
                        :uberjar-name "app.jar"}})
-
